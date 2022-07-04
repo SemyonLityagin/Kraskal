@@ -1,0 +1,37 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "1.4.32"
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'application'
+}
+group = 'com.test'
+version = '1.0-SNAPSHOT'
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.graphics', 'javafx.fxml']
+}
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClassName = "com.example.MainKt"
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.openjfx:javafx:11.0.2"
+    implementation "org.openjfx:javafx-base:11.0.2"
+    implementation "org.openjfx:javafx-controls:11.0.2"
+    implementation platform('org.jetbrains.kotlin:kotlin-bom')
+    implementation "no.tornado:tornadofx:$tornadofx_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
