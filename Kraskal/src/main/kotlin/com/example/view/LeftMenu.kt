@@ -4,7 +4,9 @@ import com.example.Styles
 import com.example.controller.LeftMenuController
 import com.example.controller.NameButton
 import javafx.geometry.Pos
+import javafx.scene.control.TextFormatter
 import tornadofx.*
+import kotlin.math.roundToInt
 
 class LeftMenu : View("My View") {
     val lMController: LeftMenuController by inject()
@@ -18,6 +20,7 @@ class LeftMenu : View("My View") {
                 bottom = javafx.scene.paint.Color.DARKGRAY
             )
         }
+        maxWidth = 120.0
         alignment = Pos.TOP_CENTER
         spacing = 10.0
 
@@ -34,6 +37,12 @@ class LeftMenu : View("My View") {
                 lMController.btClicked(NameButton.NODE)
             }
         }
+        textfield{
+            lMController.setNodeText(this)
+            id = "node"
+            promptText = "Input node's name"
+            tooltip("Input the unique node's name")
+        }
 
         button() {
             tooltip("You should click on node A and node B to create edge")
@@ -41,6 +50,17 @@ class LeftMenu : View("My View") {
             addClass(Styles.forButton)
             action {
                 lMController.btClicked(NameButton.EDGE)
+            }
+        }
+        textfield{
+            lMController.setWeightText(this)
+            id = "weight"
+            filterInput { it.controlNewText.isInt() }
+            promptText = "Input edge's weight"
+            tooltip("Input the edge's weight")
+            action {
+                if(text!="") text = text.toInt().toString()
+                positionCaret(text.length)
             }
         }
 
@@ -54,6 +74,7 @@ class LeftMenu : View("My View") {
             addClass(Styles.forButton)
             action {
                 lMController.btClicked(NameButton.GRAPH)
+                lMController.btGraph()
             }
         }
 
@@ -78,6 +99,7 @@ class LeftMenu : View("My View") {
             addClass(Styles.forButton)
             action {
                 lMController.btClicked(NameButton.DELETE)
+                lMController.btGraphStart()
             }
         }
     }

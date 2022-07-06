@@ -22,12 +22,14 @@ class Styles : Stylesheet() {
             padding = box(4.px)
             fontSize = 12.px
             fontWeight = FontWeight.BOLD
+            underline = true
+            /*
             borderColor += box(
-                top = javafx.scene.paint.Color.RED,
+                top = javafx.scene.paint.Color.BLACK,
                 right = javafx.scene.paint.Color.BLACK,
                 left = javafx.scene.paint.Color.BLACK,
                 bottom = javafx.scene.paint.Color.BLACK
-            )
+            )*/
         }
         forStage{
             //backgroundColor += c(30, 33, 61, 1.0)

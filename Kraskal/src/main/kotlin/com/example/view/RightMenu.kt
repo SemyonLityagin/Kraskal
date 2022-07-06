@@ -29,15 +29,17 @@ class RightMenu : View("My View") {
             text = "Full"
             addClass(Styles.forButton)
             action {
-                lMController.btClicked(NameButton.FULL)
+                lMController.btFull()
             }
+            tooltip("Input the unique node's name")
         }
         button {
             text = "One step in"
             addClass(Styles.forButton)
             action {
-                lMController.btClicked(NameButton.ONE_STEP_IN)
+                lMController.btOneIn()
             }
+            tooltip("Input the unique node's name")
         }
         button {
             text = "One step out"
@@ -45,6 +47,7 @@ class RightMenu : View("My View") {
             action {
                 lMController.btClicked(NameButton.ONE_STEP_OUT)
             }
+            tooltip("Input the unique node's name")
         }
 
         label {
@@ -55,8 +58,9 @@ class RightMenu : View("My View") {
             text = "Graph"
             addClass(Styles.forButton)
             action {
-                lMController.btClicked(NameButton.GRAPH_START)
+                lMController.btGraphStart()
             }
+            tooltip("Input the unique node's name")
         }
 
         label {
@@ -69,6 +73,7 @@ class RightMenu : View("My View") {
             action {
                 lMController.btShow()
             }
+            tooltip("Input the unique node's name")
         }
 
     }

@@ -7,14 +7,14 @@ import tornadofx.*
 class Interface : View("My View") {
     val canvasController: CanvasController by inject()
     val lMCController: LeftMenuController by inject()
-    var nodeRadius = 10.0
+    var nodeRadius = 20.0
 
     override val root = borderpane {
         addClass(Styles.forStage)
         center{
             setMaxSize(975.0,600.0)
             pane{
-                lMCController.pane = this
+                lMCController.setThisPane(this)
                 setMinSize(canvasController.canvasWidth,canvasController.canvasHeight)
                 setMaxSize(canvasController.canvasWidth,canvasController.canvasHeight)
                 addClass(Styles.forCanv)
@@ -22,7 +22,7 @@ class Interface : View("My View") {
                 setOnMouseClicked {
                     when(lMCController.actBt){
                         NameButton.NODE -> {
-                            canvasController.addCircle(it.x, it.y, nodeRadius, CircleState.BLACK)
+                            canvasController.addCircle(it.x, it.y, nodeRadius, canvasController.black)
                             /*if(canvasController.addCircle(it.x, it.y, nodeRadius, CircleState.BLACK)){
                                 circle {
                                     centerX = it.x
