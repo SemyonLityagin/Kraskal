@@ -54,6 +54,7 @@ class LeftMenuController: Controller() {
     var linesToRestore:MutableList<Point> = mutableListOf()
     var wasDragged = false
     var lateDelete = false
+    var moveEdge = false
 
     fun setThisPane(pane: Pane){
         this.pane = pane
@@ -205,6 +206,8 @@ class LeftMenuController: Controller() {
                     canvasController.delEdge1Side(x,y)
                     this.layoutX += it.x
                     this.layoutY += it.y
+                    isDragged = false
+                    moveEdge = true
                 }
             }
             setOnMouseClicked {
@@ -280,8 +283,9 @@ class LeftMenuController: Controller() {
 
                     }
                 }
-                if(isDragged) {
+                if(moveEdge) {
                     wasDragged = true
+                    moveEdge = false
                     for (point in linesToRestore) {
                         pane.line {
                             startX = point.x

@@ -99,7 +99,7 @@ class LeftMenu : View("My View") {
             addClass(Styles.forButton)
             action {
                 lMController.btClicked(NameButton.DELETE)
-                lMController.btGraphStart()
+                //lMController.btGraphStart()
             }
         }
     }

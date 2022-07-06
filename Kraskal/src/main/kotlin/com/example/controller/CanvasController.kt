@@ -24,14 +24,17 @@ class CanvasController: Controller() {
         nodes.add(Node(x, y, radius, state, text))
     }
     fun addCircle(x: Double, y: Double, radius: Double, state: Paint,text:String?=null): Boolean{
-        val currText = text ?: lMController.nodeTextField.text
+        var currText = text ?: lMController.nodeTextField.text
         if (lMController.wasDragged) {
             lMController.wasDragged = false
             return false
         }
         if(currText in names || currText==""){
-            lMController.incorrectName()
-            return false
+            var ind = 1
+            while(currText+ind.toString() in names){
+                ind++
+            }
+            currText += ind.toString()
         }
         if((x-radius) <=0 || (x+radius) >= canvasWidth || (y - radius) <= 0 || (y+radius) >= canvasHeight) return false
         nodes.forEach {
@@ -39,7 +42,7 @@ class CanvasController: Controller() {
         }
         names.add(currText)
         nodes.add(Node(x, y, radius, state, currText))
-                lMController.btNode(x,y,radius,state, currText)
+        lMController.btNode(x,y,radius,state, currText)
         return true
     }
     fun delCircle(x: Double, y:Double){
@@ -119,7 +122,7 @@ class CanvasController: Controller() {
         }
         return false
     }
-    inner class Node(val x: Double, val y: Double, val radius: Double, var state: Paint,val id: String)
-    inner class Edge(val x1: Double, val x2: Double, val y1: Double, val y2: Double, var state: Paint, val weight: Int, val id: String)
+    inner class Node(var x: Double, var y: Double, var radius: Double, var state: Paint,val id: String)
+    inner class Edge(var x1: Double, var x2: Double, var y1: Double, var y2: Double, var state: Paint, var weight: Int, val id: String)
 
 }
