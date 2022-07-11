@@ -1,6 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version "1.4.32"
     id 'org.openjfx.javafxplugin' version '0.0.8'
+    id "com.github.johnrengelman.shadow" version "4.0.2"
     id 'application'
 }
 group = 'com.test'
@@ -34,4 +35,7 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "11"
+}
+test {
+    useJUnitPlatform()
 }

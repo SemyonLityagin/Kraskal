@@ -1,13 +1,14 @@
 package com.example.view
 
 import com.example.Styles
-import com.example.controller.LeftMenuController
-import com.example.controller.NameButton
+import com.example.controller.MenuController
+import javafx.application.Platform
 import javafx.geometry.Pos
+import javafx.scene.text.TextAlignment
 import tornadofx.*
 
 class RightMenu : View("My View") {
-    val lMController: LeftMenuController by inject()
+    val mController: MenuController by inject()
 
     override val root = vbox {
         style {
@@ -20,61 +21,102 @@ class RightMenu : View("My View") {
         }
         alignment = Pos.TOP_CENTER
         spacing = 10.0
-
-        label {
-            text = "Visualisation:"
-            addClass(Styles.forLabels)
-        }
-        button {
-            text = "Full"
-            addClass(Styles.forButton)
-            action {
-                lMController.btFull()
+        maxWidth = 120.0
+        Platform.runLater {
+            label {
+                text = "Visualisation:"
+                addClass(Styles.forLabels)
             }
-            tooltip("Input the unique node's name")
-        }
-        button {
-            text = "One step in"
-            addClass(Styles.forButton)
-            action {
-                lMController.btOneIn()
+            button {
+                id = "FULL"
+                text = "Full"
+                addClass(Styles.forDisButton)
+                action {
+                    mController.btFull()
+                }
+                tooltip("Visualisation all Kruskal steps")
             }
-            tooltip("Input the unique node's name")
-        }
-        button {
-            text = "One step out"
-            addClass(Styles.forButton)
-            action {
-                lMController.btClicked(NameButton.ONE_STEP_OUT)
+            button {
+                id = "ONE_STEP_IN"
+                text = "One step in"
+                addClass(Styles.forDisButton)
+                action {
+                    mController.btOneIn()
+                }
+                tooltip("Visualisation one Kruskal steps forward")
             }
-            tooltip("Input the unique node's name")
-        }
-
-        label {
-            text = "Initial state:"
-            addClass(Styles.forLabels)
-        }
-        button {
-            text = "Graph"
-            addClass(Styles.forButton)
-            action {
-                lMController.btGraphStart()
+            button {
+                id = "ONE_STEP_OUT"
+                text = "One step out"
+                addClass(Styles.forDisButton)
+                action {
+                    mController.btOneOut()
+                }
+                tooltip("Visualisation one Kruskal steps back")
             }
-            tooltip("Input the unique node's name")
-        }
-
-        label {
-            text = "Explanations:"
-            addClass(Styles.forLabels)
-        }
-        button {
-            text = "Show"
-            addClass(Styles.forButton)
-            action {
-                lMController.btShow()
+            textfield{
+                mController.setSpeedText(this)
+                id = "weight"
+                filterInput { it.controlNewText.isInt() }
+                promptText = "Input speed (1..20)"
+                tooltip("Input visualisation speed, where 1 - extremely slow, 20 - instantly")
+                action {
+                    if(text!="") {
+                        var value = text.toInt()
+                        if(value < 1) value = 1
+                        else if(value > 20) value = 10
+                        text = value.toString()
+                    }
+                    else{
+                        text = "1"
+                    }
+                    positionCaret(text.length)
+                }
             }
-            tooltip("Input the unique node's name")
+            label {
+                text = "Initial state:"
+                addClass(Styles.forLabels)
+            }
+            button {
+                id = "GRAPH_START"
+                text = "Graph"
+                addClass(Styles.forDisButton)
+                action {
+                    Platform.runLater {
+                        mController.btGraphStart()
+                    }
+                }
+                tooltip("Resetting the graph to the beginning")
+            }
+            label {
+                text = "Explanations:"
+                addClass(Styles.forLabels)
+            }
+            button {
+                id = "SHOW"
+                text = "Show"
+                addClass(Styles.forDisButton)
+                action {
+                    mController.btShow()
+                }
+                tooltip("Click to open window with explanations")
+            }
+            label {
+                text = "Save explanations\n in file:"
+                addClass(Styles.forLabels)
+                style{
+                    textAlignment = TextAlignment.CENTER
+                }
+            }
+            button {
+                id = "SAVE"
+                text = "Save"
+                addClass(Styles.forDisButton)
+                action {
+                    mController.btSave()
+                }
+                tooltip("Click to save explanations in file")
+            }
         }
-
     }
 }

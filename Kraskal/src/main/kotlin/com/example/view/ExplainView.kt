@@ -1,20 +1,17 @@
 package com.example.view
 
-import com.example.controller.LeftMenuController
+import com.example.controller.MenuController
 import tornadofx.*
 
 class ExplainView : View("Explanation") {
-    val lMController: LeftMenuController by inject()
-    override val root = pane {
-        minWidth = 400.0
-        minHeight = 200.0
-        maxHeight = 200.0
-        maxWidth = 400.0
-        label(lMController.explainText)
+    val mController: MenuController by inject()
+    
+    override val root = textarea(mController.explainText){
+        setPrefSize(400.0, 200.0)
+        isWrapText = true
     }
-
     override fun onUndock() {
-        lMController.flagExpClose = true
+        mController.flagExpClose = true
         super.onUndock()
     }
 }

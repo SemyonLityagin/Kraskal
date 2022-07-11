@@ -2,51 +2,39 @@ package com.example.view
 
 import com.example.Styles
 import com.example.controller.*
+import com.sun.glass.ui.Screen
 import tornadofx.*
 
-class Interface : View("My View") {
+class Interface : View("Kruskal") {
     val canvasController: CanvasController by inject()
-    val lMCController: LeftMenuController by inject()
-    var nodeRadius = 20.0
+    val mController: MenuController by inject()
 
     override val root = borderpane {
         addClass(Styles.forStage)
-        center{
-            setMaxSize(975.0,600.0)
-            pane{
-                lMCController.setThisPane(this)
-                setMinSize(canvasController.canvasWidth,canvasController.canvasHeight)
-                setMaxSize(canvasController.canvasWidth,canvasController.canvasHeight)
-                addClass(Styles.forCanv)
+        left<LeftMenu>()
+        right<RightMenu>()
+        mController.leftMenu = this@borderpane.left
+        mController.rightMenu = this@borderpane.right
 
-                setOnMouseClicked {
-                    when(lMCController.actBt){
-                        NameButton.NODE -> {
-                            canvasController.addCircle(it.x, it.y, nodeRadius, canvasController.black)
-                            /*if(canvasController.addCircle(it.x, it.y, nodeRadius, CircleState.BLACK)){
-                                circle {
-                                    centerX = it.x
-                                    centerY = it.y
-                                    println("///"+it.x.toString() + " , " + it.y.toString())
-                                    radius = nodeRadius
-                                    setOnMouseClicked {
-                                        if(lMCController.actBt == NameButton.DELETE) {
-                                            canvasController.delCircle(centerX, centerY)
-                                            parent.getChildList()?.remove(this)
-                                        }
-                                    }
-                                }
-                            }*/
+        center{
+            this@center.setPrefSize(Screen.getMainScreen().width.toDouble()/2, Screen.getMainScreen().height.toDouble()/2)
+            canvasController.canvasHeight.bind(this@center.heightProperty())
+            canvasController.canvasWidth.bind(this@center.widthProperty())
+            scrollpane {
+                pane{
+                    setPrefSize(Screen.getMainScreen().width.toDouble()-150, Screen.getMainScreen().height.toDouble()-80)
+                    mController.pane = this
+                    canvasController.pane = this
+                    canvasController.canvasMaxHeight.bind(this.heightProperty())
+                    canvasController.canvasMaxWidth.bind(this.widthProperty())
+                    addClass(Styles.forCanv)
+                    setOnMouseClicked {
+                        if(mController.actBt == NameButton.NODE){
+                            mController.btNode(it.x, it.y)
                         }
-                        //NameButton.GRAPH ->
-                        //NameButton.EDGE ->
                     }
                 }
             }
         }
-        left<LeftMenu>()
-        right<RightMenu>()
-
     }
-
 }

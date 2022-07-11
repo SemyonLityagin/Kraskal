@@ -1,44 +1,43 @@
 package com.example
 
+import javafx.scene.paint.*
 import javafx.scene.text.FontWeight
 import tornadofx.*
 
 class Styles : Stylesheet() {
     companion object {
-        val heading by cssclass()
         val forLabels by cssclass()
         val forCanv by cssclass()
-        val forButton by cssclass()
+        val forActButton by cssclass()
+        val forDisButton by cssclass()
         val forStage by cssclass()
     }
 
     init {
-        heading {
-            padding = box(5.px)
-            fontSize = 12.px
-            fontWeight = FontWeight.BOLD
-        }
         forLabels {
             padding = box(4.px)
             fontSize = 12.px
             fontWeight = FontWeight.BOLD
             underline = true
-            /*
-            borderColor += box(
-                top = javafx.scene.paint.Color.BLACK,
-                right = javafx.scene.paint.Color.BLACK,
-                left = javafx.scene.paint.Color.BLACK,
-                bottom = javafx.scene.paint.Color.BLACK
-            )*/
+
         }
         forStage{
-            //backgroundColor += c(30, 33, 61, 1.0)
         }
         forCanv{
-            backgroundColor += c(189,186,207, 1.0)
-            //backgroundColor += c(83, 55, 122, 1.0)
+            backgroundColor += c(213, 213, 213, 1.0)
         }
-        forButton{
+        forActButton{
+            fontWeight = FontWeight.EXTRA_BOLD
+            borderColor += box(
+                top = javafx.scene.paint.Color.DARKRED,
+                right = javafx.scene.paint.Color.DARKGREEN,
+                left = javafx.scene.paint.Color.DARKORANGE,
+                bottom = javafx.scene.paint.Color.PURPLE
+            )
+            backgroundColor += LinearGradient(0.0, 0.0, 1.0, 1.0, true, CycleMethod.REPEAT, Stop(0.0, c(0,26,51,1.0)),Stop(0.5, c(50,142,161,1.0)), Stop(1.0, c(1,93,82,1.0)))
+            textFill = c(254,229,174,1.0)
+        }
+        forDisButton{
             fontWeight = FontWeight.EXTRA_BOLD
             borderColor += box(
                 top = javafx.scene.paint.Color.RED,
